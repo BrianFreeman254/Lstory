@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Special Story ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fecfef, #f9bede);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .container {
+      display: none;
+      text-align: center;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 40px rgba(255, 105, 135, 0.5);
+      transition: all 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: linear-gradient(45deg, #ff6b6b, #ffc6c6, #ff6b6b, #ffc6c6);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+      z-index: -1;
+      border-radius: 25px;
+      filter: blur(15px);
+      opacity: 0.6;
+    }
+    
+    h1 {
+      font-size: 2.8rem;
+      color: #ff6f91;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 10px rgba(255, 105, 135, 0.4);
+      font-weight: 700;
+      letter-spacing: 1px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1::after {
+      content: '';
+      position: absolute;
+      width: 60%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ff6f91, transparent);
+      bottom: -10px;
+      left: 20%;
+    }
+    
+    p {
+      font-size: 1.3rem;
+      color: #555;
+      line-height: 1.9;
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease;
+      position: relative;
+      padding: 0 20px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+    
+    p.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    p::first-letter {
+      font-size: 2.2rem;
+      color: #ff6f91;
+      font-weight: bold;
+    }
+    
+    strong, b {
+      color: #ff4b73;
+      font-weight: 700;
+      position: relative;
+    }
+    
+    strong::after, b::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: rgba(255, 75, 115, 0.3);
+      bottom: 0;
+      left: 0;
+    }
+    
+    button {
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      background: linear-gradient(45deg, #ff6f91, #ff8e9e);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 25px;
+      box-shadow: 0 4px 15px rgba(255, 111, 145, 0.4);
+      transition: all 0.3s ease;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 20px rgba(255, 111, 145, 0.5);
+      background: linear-gradient(45deg, #ff5c82, #ff7b8f);
+    }
+    
+    button:active {
+      transform: translateY(1px);
+    }
+    
+    button::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: -100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    button:hover::after {
+      left: 100%;
+    }
+    
+    .pin-container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 40px rgba(255, 105, 135, 0.5);
+      max-width: 500px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .pin-container::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: linear-gradient(45deg, #ff6b6b, #ffc6c6, #ff6b6b, #ffc6c6);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+      z-index: -1;
+      border-radius: 25px;
+      filter: blur(15px);
+      opacity: 0.4;
+    }
+    
+    .pin-input-group {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 10px;
+    }
+    
+    .pin-digit {
+      width: 50px;
+      height: 60px;
+      font-size: 1.8rem;
+      text-align: center;
+      border: 2px solid #ffa0b3;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(255, 111, 145, 0.2);
+      outline: none;
+    }
+    
+    .pin-digit:focus {
+      border-color: #ff6f91;
+      box-shadow: 0 4px 15px rgba(255, 111, 145, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    #wrong-pin {
+      color: #ff3b5c;
+      margin-top: 15px;
+      font-weight: 600;
+      display: none;
+      animation: shake 0.5s ease-in-out;
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+    
+    .attempts {
+      margin-top: 20px;
+      color: #777;
+      font-size: 0.9rem;
+    }
+    
+    .lockout-message {
+      display: none;
+      color: #ff3b5c;
+      margin: 20px 0;
+      font-weight: 600;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    
+    .lockout-countdown {
+      font-size: 2rem;
+      margin: 15px 0;
+      color: #ff3b5c;
+    }
+    
+    .hint-container {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #ffd1dc;
+    }
+    
+    .hint-button {
+      background: transparent;
+      color: #777;
+      border: 1px solid #ffd1dc;
+      padding: 8px 15px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .hint-button:hover {
+      background: rgba(255, 111, 145, 0.1);
+      color: #ff6f91;
+    }
+    
+    .hint-text {
+      display: none;
+      color: #777;
+      margin-top: 15px;
+      font-size: 0.95rem;
+      padding: 15px;
+      background: rgba(255, 209, 220, 0.2);
+      border-radius: 10px;
+    }
+    
+    .security-question {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      border: 1px solid #ffd1dc;
+    }
+    
+    .security-question p {
+      display: block;
+      opacity: 1;
+      transform: none;
+      text-align: center;
+      margin-bottom: 15px;
+      padding: 0;
+    }
+    
+    .security-answer {
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #ffa0b3;
+      border-radius: 5px;
+      outline: none;
+      width: 80%;
+      max-width: 300px;
+    }
+    
+    audio {
+      margin-top: 30px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      display: none;
+    }
+    
+    .copyright {
+      font-size: 0.9rem;
+      color: #888;
+      margin-top: 40px;
+      letter-spacing: 0.5px;
+    }
+    
+    .heart-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .date-counter {
+      display: inline-block;
+      margin: 15px 0;
+      padding: 10px 20px;
+      background: linear-gradient(45deg, #ff6f91, #ff9eb5);
+      color: white;
+      border-radius: 50px;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(255, 111, 145, 0.3);
+    }
+    
+    .polaroid {
+      background: white;
+      padding: 15px 15px 40px 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      transform: rotate(-3deg);
+      max-width: 300px;
+      margin: 30px auto;
+      transition: all 0.3s ease;
+      display: none;
+    }
+    
+    .polaroid:hover {
+      transform: rotate(0) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .polaroid img {
+      width: 100%;
+      height: auto;
+      border: 1px solid #eee;
+    }
+    
+    .polaroid p {
+      margin-top: 15px;
+      font-family: 'Indie Flower', cursive;
+      font-size: 1.1rem;
+      color: #555;
+      display: block;
+      opacity: 1;
+      transform: none;
+    }
+    
+    .special-effect {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1000;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 111, 145, 0.3);
+      border-radius: 50%;
+      border-top-color: #ff6f91;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .loading-text {
+      margin-top: 20px;
+      color: #ff6f91;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+    
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #f00;
+      opacity: 0;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(calc(100vh + 100px)) rotate(360deg); opacity: 0; }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+    }
+    
+    .floating-hearts {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .floating-heart {
+      position: absolute;
+      color: rgba(255, 111, 145, 0.6);
+      font-size: 1.5rem;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      p {
+        font-size: 1.1rem;
+        padding: 0 10px;
+      }
+      
+      .container, .pin-container {
+        max-width: 90%;
+        padding: 20px;
+      }
+      
+      .pin-digit {
+        width: 40px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Indie+Flower&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+  <div class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading your special message...</div>
+  </div>
+
+  <div class="floating-hearts" id="floating-hearts"></div>
+
+  <div class="pin-container" id="pin-container">
+    <h1>Our Special Moment ❤️</h1>
+    <p>Enter the PIN to reveal our story</p>
+    
+    <div class="pin-input-group">
+      <input type="password" class="pin-digit" maxlength="1" id="digit-1" autocomplete="off">
+      <input type="password" class="pin-digit" maxlength="1" id="digit-2" autocomplete="off">
+      <input type="password" class="pin-digit" maxlength="1" id="digit-3" autocomplete="off">
+      <input type="password" class="pin-digit" maxlength="1" id="digit-4" autocomplete="off">
+    </div>
+    
+    <button onclick="verifyPin()" id="submit-btn">Unlock Our Story</button>
+    <p id="wrong-pin">Incorrect PIN. Please try again.</p>
+    <p class="attempts" id="attempts-left">Attempts remaining: 3</p>
+    
+    <div class="lockout-message" id="lockout-message">
+      <p>For security reasons, this page has been locked.</p>
+      <p>An email with the correct PIN has been sent to your partner.</p>
+      <p>You can try again in:</p>
+      <div class="lockout-countdown" id="lockout-countdown">05:00</div>
+    </div>
+    
+    <div class="security-question" id="security-question">
+      <p>Security Question:</p>
+      <p id="math-question">What is 2000 + 5?</p>
+      <input type="text" class="security-answer" id="security-answer" placeholder="Enter your answer">
+      <button onclick="checkSecurityAnswer()">Submit Answer</button>
+    </div>
+    
+    <div class="hint-container">
+      <button class="hint-button" onclick="toggleHint()">Need a hint?</button>
+      <p class="hint-text" id="hint-text">Think about a special date in our story...</p>
+    </div>
+  </div>
+
+  <div class="container" id="note-container">
+    <h1>Our Special Story ❤️</h1>
+    
+    <div class="date-counter" id="days-counter"></div>
+    
+    <p id="para-1">
+      It was something we both didn't expect—that we would one day fall in love.  
+      We were just friends, normal friends, who interacted online but not much.
+    </p>
+    
+    <p id="para-2">
+      One day, I realized you were the person I wanted in my life.  
+      We met for the first time on <b>1st November</b> at Shopping Centre in Kenyatta University.  
+      At that moment, I could feel how special you were to me.
+    </p>
+    
+    <div class="polaroid" id="polaroid-1">
+      <img src="/api/placeholder/300/200" alt="Our first meeting">
+      <p>Our first meeting at KU</p>
+    </div>
+    
+    <p id="para-3">
+      It has been <b id="days-passed"></b> days since that day, and now we meet again today.  
+      I'll never forget how shy you were, how you faced the wall so others couldn't see you.  
+      That moment made me realize how precious and unique you are.
+    </p>
+    
+    <p id="para-4">
+      Sharlyn, you have made these days some of the happiest in my life, and I'm so grateful for every moment with you.  
+      I promise to cherish and love you always.
+    </p>
+    
+    <div class="polaroid" id="polaroid-2">
+      <img src="/api/placeholder/300/200" alt="Our special day">
+      <p>Every day with you is special</p>
+    </div>
+    
+    <p id="para-5">
+      From our first conversation to our daily texts, from our shy hellos to our comfortable silences - 
+      every moment has been engraved in my heart. As we continue this beautiful journey together, 
+      I want you to know that my love for you grows stronger with each passing day.
+    </p>
+    
+    <button onclick="revealNextParagraph()" id="next-btn">Tap to Reveal the Next Part</button>
+    
+    <audio id="bg-music" controls loop>
+      <source src="music.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    
+    <div class="copyright">
+      © 2025 Brian and Sharlyn. All Rights Reserved.
+    </div>
+  </div>
+
+  <div class="special-effect" id="heart-shower"></div>
+
+  <script>
+    // ==== Enhanced Security ====
+    // Using SHA-256 hash for the PIN
+    const correctPinHash = "4d130d8d7e84302bb8f289ab34e8b5221ae1df9f127e5336b067c77e3d2d322f"; // SHA-256 hash of "2005"
+    
+    // Security question and answer
+    const securityAnswers = ["2005", "two thousand and five", "two thousand five"];
+    
+    // ==== Constants and Variables ====
+    const firstMeetingDate = new Date('2023-11-01');
+    const currentDate = new Date();
+    const daysPassed = Math.floor((currentDate - firstMeetingDate) / (1000 * 60 * 60 * 24));
+    
+    let attemptsLeft = 3;
+    let currentParagraph = 0;
+    let pinDigits = document.querySelectorAll('.pin-digit');
+    let isLocked = false;
+    let lockoutTime = 300; // 5 minutes in seconds
+    let lockoutTimer;
+    let securityQuestionShown = false;
+    let previouslyAccessed = localStorage.getItem('accessed') === 'true';
+    
+    // ==== Initialization ====
+    window.onload = function() {
+      // Set up digit input flow
+      setupPinInputs();
+      
+      // Create floating hearts
+      createFloatingHearts();
+      
+      // Update dynamic content
+      document.getElementById('days-passed').textContent = daysPassed;
+      document.getElementById('days-counter').textContent = `${daysPassed} days of love ❤️`;
+      
+      // Check if previously accessed
+      if (previouslyAccessed) {
+        document.getElementById('attempts-left').textContent += " (Welcome back!)";
+      }
+      
+      // Remove loading overlay after a short delay
+      setTimeout(() => {
+        document.querySelector('.loading-overlay').style.opacity = '0';
+        setTimeout(() => {
+          document.querySelector('.loading-overlay').style.display = 'none';
+        }, 500);
+      }, 1500);
+      
+      // Check for lockout from previous visit
+      const lockoutEndTime = localStorage.getItem('lockoutEndTime');
+      if (lockoutEndTime && parseInt(lockoutEndTime) > Date.now()) {
+        showLockout();
+        const remainingTime = Math.floor((parseInt(lockoutEndTime) - Date.now()) / 1000);
+        startLockoutTimer(remainingTime);
+      }
+    };
+    
+    // ==== PIN Functions ====
+    function setupPinInputs() {
+      // Auto-focus next input when a digit is entered
+      pinDigits.forEach((input, index) => {
+        input.addEventListener('input', function() {
+          if (this.value.length === 1) {
+            if (index < pinDigits.length - 1) {
+              pinDigits[index + 1].focus();
+            }
+          }
+        });
+        
+        // Allow backspace to go to previous field
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && !this.value && index > 0) {
+            pinDigits[index - 1].focus();
+          }
+        });
+      });
+      
+      // Allow pressing Enter to submit
+      pinDigits[pinDigits.length - 1].addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+          verifyPin();
+        }
+      });
+    }
+    
+    function getEnteredPin() {
+      return Array.from(pinDigits).map(input => input.value).join('');
+    }
+    
+    function verifyPin() {
+      if (isLocked) return;
+      
+      const enteredPin = getEnteredPin();
+      
+      // Hash the entered PIN using SHA-256
+      const enteredPinHash = CryptoJS.SHA256(enteredPin).toString();
+      
+      if (enteredPinHash === correctPinHash) {
+        // Success - show the message
+        unlockMessage();
+      } else {
+        // Failed attempt
+        handleFailedAttempt();
+      }
+    }
+    
+    function handleFailedAttempt() {
+      attemptsLeft--;
+      document.getElementById('attempts-left').textContent = `Attempts remaining: ${attemptsLeft}`;
+      
+      // Show error message with animation
+      const wrongPin = document.getElementById('wrong-pin');
+      wrongPin.style.display = 'block';
+      wrongPin.style.animation = 'none';
+      setTimeout(() => {
+        wrongPin.style.animation = 'shake 0.5s ease-in-out';
+      }, 10);
+      
+      // Clear PIN fields
+      pinDigits.forEach(input => {
+        input.value = '';
+      });
+      pinDigits[0].focus();
+      
+      // Show security question after 2 failed attempts
+      if (attemptsLeft === 1 && !securityQuestionShown) {
+        showSecurityQuestion();
+      }
+      
+      // Lock out after 3 failed attempts
+      if (attemptsLeft <= 0) {
+        lockout();
+      }
+    }
+    
+    function showSecurityQuestion() {
+      securityQuestionShown = true;
+      document.getElementById('security-question').style.display = 'block';
+      document.getElementById('security-answer').focus();
+    }
+    
+    function checkSecurityAnswer() {
+      const answer = document.getElementById('security-answer').value.trim().toLowerCase();
+      
+      if (securityAnswers.includes(answer)) {
+        // Correct answer - show the message
+        unlockMessage();
+      } else {
+        // Wrong answer - decrease attempts
+        handleFailedAttempt();
+      }
+    }
+    
+    function lockout() {
+      isLocked = true;
+      document.getElementById('lockout-message').style.display = 'block';
+      document.getElementById('submit-btn').disabled = true;
+      
+      // Set lockout end time in localStorage
+      const lockoutEndTime = Date.now() + (lockoutTime * 1000);
+      localStorage.setItem('lockoutEndTime', lockoutEndTime.toString());
+      
+      // Send "email" - simulate by showing in console
+      console.log("Email sent to partner with PIN: 2005");
+      
+      // Start countdown timer
+      startLockoutTimer(lockoutTime);
+      
+      // Simulate email sending
+      simulateEmailSending();
+    }
+    
+    function simulateEmailSending() {
+      // This function would be replaced with actual email functionality
+      // For now, just display a message in the console
+      console.log("Simulating email: 'Dear Sharlyn, the PIN to access our special page is 2005.'");
+    }
+    
+    function showLockout() {
+      isLocked = true;
+      document.getElementById('lockout-message').style.display = 'block';
+      document.getElementById('submit-btn').disabled = true;
+      pinDigits.forEach(input => {
+        input.disabled = true;
+      });
+    }
+    
+    function startLockoutTimer(timeLeft) {
+      updateLockoutDisplay(timeLeft);
+      
+      lockoutTimer = setInterval(() => {
+        timeLeft--;
+        updateLockoutDisplay(timeLeft);
+        
+        if (timeLeft <= 0) {
+          clearInterval(lockoutTimer);
+          endLockout();
+        }
+      }, 1000);
+    }
+    
+    function updateLockoutDisplay(timeLeft) {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById('lockout-countdown').textContent = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+    
+    function endLockout() {
+      isLocked = false;
+      attemptsLeft = 3;
+      document.getElementById('lockout-message').style.display = 'none';
+      document.getElementById('submit-btn').disabled = false;
+      document.getElementById('attempts-left').textContent = `Attempts remaining: ${attemptsLeft}`;
+      
+      pinDigits.forEach(input => {
+        input.disabled = false;
+      });
+      pinDigits[0].focus();
+      
+      localStorage.removeItem('lockoutEndTime');
+    }
+    
+    function unlockMessage() {
+      // Store that it's been accessed
+      localStorage.setItem('accessed', 'true');
+      
+      // Hide PIN container and show message
+      document.querySelector('.pin-container').style.display = 'none';
+      document.getElementById('note-container').style.display = 'block';
+      
+      // Play music
+      const music = document.getElementById('bg-music');
+      music.style.display = 'block';
+      music.play().catch(e => console.log('Auto-play prevented by browser'));
+      
+      // Show the first paragraph immediately
+      revealNextParagraph();
+      
+      // Create heart shower effect
+      createHeartShower();
+    }
+    
+    // ==== Message Reveal Functions ====
+    function revealNextParagraph() {
+      const paragraphs = document.querySelectorAll('#note-container p:not(.copyright)');
+      const polaroids = document.querySelectorAll('.polaroid');
+      
+      if (currentParagraph < paragraphs.length) {
+        // Show paragraph with animation
+        const currentP = paragraphs[currentParagraph];
+        currentP.style.display = 'block';
+        setTimeout(() => {
+          currentP.classList.add('visible');
+        }, 100);
+        
+        // Show polaroid if it exists for this paragraph
+        if (currentParagraph === 1 || currentParagraph === 3) {
+          const polaroidIndex = currentParagraph === 1 ? 0 : 1;
+          if (polaroids[polaroidIndex]) {
+            polaroids[polaroidIndex].style.display = 'block';
+          }
+        }
+        
+        currentParagraph++;
+        
+        // Hide button if all paragraphs are shown
+        if (currentParagraph >= paragraphs.length) {
+          document.getElementById('next-btn').style.display = 'none';
+          createConfetti(); // Final celebration
+        }
+      }
+    }
+    
+    // ==== Visual Effects ====
+    function createFloatingHearts() {
+      const container = document.getElementById('floating-hearts');
+      const heartCount = 15;
+      
+for (let i = 0; i < heartCount; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('floating-heart');
+        heart.innerHTML = '❤️';
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.top = `${Math.random() * 100}%`;
+        heart.style.animationDelay = `${Math.random() * 5}s`;
+        heart.style.animationDuration = `${5 + Math.random() * 5}s`;
+        heart.style.opacity = `${0.3 + Math.random() * 0.7}`;
+        heart.style.fontSize = `${1 + Math.random() * 1.5}rem`;
+        container.appendChild(heart);
+      }
+    }
+    
+    function createHeartShower() {
+      const container = document.getElementById('heart-shower');
+      container.style.display = 'block';
+      
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.innerHTML = '❤️';
+          heart.style.position = 'absolute';
+          heart.style.left = `${Math.random() * 100}%`;
+          heart.style.top = '-50px';
+          heart.style.fontSize = `${20 + Math.random() * 30}px`;
+          heart.style.opacity = '0';
+          heart.style.animation = `fall ${3 + Math.random() * 5}s linear`;
+          heart.style.animationDelay = `${Math.random() * 0.5}s`;
+          container.appendChild(heart);
+          
+          // Remove heart after animation ends
+          setTimeout(() => {
+            heart.remove();
+          }, 8000);
+        }, i * 200);
+      }
+      
+      // Hide container after effect ends
+      setTimeout(() => {
+        container.style.display = 'none';
+      }, 15000);
+    }
+    
+    function createConfetti() {
+      const container = document.body;
+      const colors = ['#ff6f91', '#ff9eb5', '#ffd1dc', '#ffecf0', '#ff4b73'];
+      
+      for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        
+        // Randomize confetti properties
+        const size = Math.random() * 10 + 5;
+        const shape = Math.random() > 0.5 ? '❤️' : '✨';
+        
+        confetti.innerHTML = shape;
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.width = `${size}px`;
+        confetti.style.height = `${size}px`;
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        
+        // Set animation
+        confetti.style.animation = `fall ${3 + Math.random() * 5}s linear forwards`;
+        confetti.style.animationDelay = `${Math.random() * 5}s`;
+        
+        // Append to body
+        container.appendChild(confetti);
+        
+        // Clean up after animation
+        setTimeout(() => {
+          confetti.remove();
+        }, 8000);
+      }
+    }
+    
+    // ==== Helper Functions ====
+    function toggleHint() {
+      const hintText = document.getElementById('hint-text');
+      hintText.style.display = hintText.style.display === 'block' ? 'none' : 'block';
+    }
+    
+    // ==== Remember state between visits ====
+    function saveState() {
+      localStorage.setItem('currentParagraph', currentParagraph.toString());
+    }
+    
+    function loadState() {
+      const savedParagraph = localStorage.getItem('currentParagraph');
+      if (savedParagraph) {
+        // Reveal all paragraphs up to the saved point
+        const paragraphCount = parseInt(savedParagraph);
+        for (let i = 0; i < paragraphCount; i++) {
+          revealNextParagraph();
+        }
+      }
+    }
+    
+    // Save state when leaving the page
+    window.addEventListener('beforeunload', saveState);
+    
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Press 'N' to reveal next paragraph
+      if (e.key === 'n' && document.getElementById('note-container').style.display === 'block') {
+        revealNextParagraph();
+      }
+      
+      // Press 'H' to toggle hint
+      if (e.key === 'h' && document.getElementById('pin-container').style.display !== 'none') {
+        toggleHint();
+      }
+    });
+  </script>
+</body>
+</html>

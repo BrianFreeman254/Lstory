@@ -499,10 +499,10 @@
     <p>Enter the PIN to reveal our story</p>
     
     <div class="pin-input-group">
-      <input type="password" class="pin-digit" maxlength="1" id="digit-1" autocomplete="off">
-      <input type="password" class="pin-digit" maxlength="1" id="digit-2" autocomplete="off">
-      <input type="password" class="pin-digit" maxlength="1" id="digit-3" autocomplete="off">
-      <input type="password" class="pin-digit" maxlength="1" id="digit-4" autocomplete="off">
+      <input type="password" class="pin-digit" maxlength="1" id="digit-1" autocomplete="off" inputmode="numeric">
+      <input type="password" class="pin-digit" maxlength="1" id="digit-2" autocomplete="off" inputmode="numeric">
+      <input type="password" class="pin-digit" maxlength="1" id="digit-3" autocomplete="off" inputmode="numeric">
+      <input type="password" class="pin-digit" maxlength="1" id="digit-4" autocomplete="off" inputmode="numeric">
     </div>
     
     <button onclick="verifyPin()" id="submit-btn">Unlock Our Story</button>
@@ -546,7 +546,7 @@
     </p>
     
     <div class="polaroid" id="polaroid-1">
-      <img src="/api/placeholder/300/200" alt="Our first meeting">
+      <img src="placeholder.jpg" alt="Our first meeting">
       <p>Our first meeting at KU</p>
     </div>
     
@@ -562,7 +562,7 @@
     </p>
     
     <div class="polaroid" id="polaroid-2">
-      <img src="/api/placeholder/300/200" alt="Our special day">
+      <img src="placeholder.jpg" alt="Our special day">
       <p>Every day with you is special</p>
     </div>
     
@@ -588,10 +588,7 @@
 
   <script>
     // ==== Enhanced Security ====
-    // Using SHA-256 hash for the PIN
     const correctPinHash = "4d130d8d7e84302bb8f289ab34e8b5221ae1df9f127e5336b067c77e3d2d322f"; // SHA-256 hash of "2005"
-    
-    // Security question and answer
     const securityAnswers = ["2005", "two thousand and five", "two thousand five"];
     
     // ==== Constants and Variables ====
@@ -601,7 +598,6 @@
     
     let attemptsLeft = 3;
     let currentParagraph = 0;
-    let pinDigits = document.querySelectorAll('.pin-digit');
     let isLocked = false;
     let lockoutTime = 300; // 5 minutes in seconds
     let lockoutTimer;
@@ -609,11 +605,8 @@
     let previouslyAccessed = localStorage.getItem('accessed') === 'true';
     
     // ==== Initialization ====
-    window.onload = function() {
-      // Set up digit input flow
+    document.addEventListener('DOMContentLoaded', function() {
       setupPinInputs();
-      
-      // Create floating hearts
       createFloatingHearts();
       
       // Update dynamic content
@@ -625,7 +618,7 @@
         document.getElementById('attempts-left').textContent += " (Welcome back!)";
       }
       
-      // Remove loading overlay after a short delay
+      // Remove loading overlay
       setTimeout(() => {
         document.querySelector('.loading-overlay').style.opacity = '0';
         setTimeout(() => {
@@ -640,53 +633,51 @@
         const remainingTime = Math.floor((parseInt(lockoutEndTime) - Date.now()) / 1000);
         startLockoutTimer(remainingTime);
       }
-    };
+      
+      // Focus first PIN digit on load
+      document.getElementById('digit-1').focus();
+    });
     
     // ==== PIN Functions ====
     function setupPinInputs() {
-      // Auto-focus next input when a digit is entered
+      const pinDigits = document.querySelectorAll('.pin-digit');
+      
       pinDigits.forEach((input, index) => {
+        // Auto-focus next input
         input.addEventListener('input', function() {
-          if (this.value.length === 1) {
-            if (index < pinDigits.length - 1) {
-              pinDigits[index + 1].focus();
-            }
+          if (this.value.length === 1 && index < pinDigits.length - 1) {
+            pinDigits[index + 1].focus();
           }
         });
-        
-        // Allow backspace to go to previous field
+
+        // Backspace to previous field
         input.addEventListener('keydown', function(e) {
           if (e.key === 'Backspace' && !this.value && index > 0) {
             pinDigits[index - 1].focus();
           }
+          // Enter to submit
+          if (e.key === 'Enter' && index === pinDigits.length - 1) {
+            verifyPin();
+          }
         });
-      });
-      
-      // Allow pressing Enter to submit
-      pinDigits[pinDigits.length - 1].addEventListener('keyup', function(e) {
-        if (e.key === 'Enter') {
-          verifyPin();
-        }
       });
     }
     
     function getEnteredPin() {
-      return Array.from(pinDigits).map(input => input.value).join('');
+      return Array.from(document.querySelectorAll('.pin-digit'))
+                 .map(input => input.value)
+                 .join('');
     }
     
     function verifyPin() {
       if (isLocked) return;
       
       const enteredPin = getEnteredPin();
-      
-      // Hash the entered PIN using SHA-256
       const enteredPinHash = CryptoJS.SHA256(enteredPin).toString();
       
       if (enteredPinHash === correctPinHash) {
-        // Success - show the message
         unlockMessage();
       } else {
-        // Failed attempt
         handleFailedAttempt();
       }
     }
@@ -699,15 +690,11 @@
       const wrongPin = document.getElementById('wrong-pin');
       wrongPin.style.display = 'block';
       wrongPin.style.animation = 'none';
-      setTimeout(() => {
-        wrongPin.style.animation = 'shake 0.5s ease-in-out';
-      }, 10);
+      setTimeout(() => wrongPin.style.animation = 'shake 0.5s ease-in-out', 10);
       
       // Clear PIN fields
-      pinDigits.forEach(input => {
-        input.value = '';
-      });
-      pinDigits[0].focus();
+      document.querySelectorAll('.pin-digit').forEach(input => input.value = '');
+      document.getElementById('digit-1').focus();
       
       // Show security question after 2 failed attempts
       if (attemptsLeft === 1 && !securityQuestionShown) {
@@ -730,10 +717,8 @@
       const answer = document.getElementById('security-answer').value.trim().toLowerCase();
       
       if (securityAnswers.includes(answer)) {
-        // Correct answer - show the message
         unlockMessage();
       } else {
-        // Wrong answer - decrease attempts
         handleFailedAttempt();
       }
     }
@@ -747,27 +732,18 @@
       const lockoutEndTime = Date.now() + (lockoutTime * 1000);
       localStorage.setItem('lockoutEndTime', lockoutEndTime.toString());
       
-      // Send "email" - simulate by showing in console
+      // Simulate email sending (would be replaced with real API call)
       console.log("Email sent to partner with PIN: 2005");
       
       // Start countdown timer
       startLockoutTimer(lockoutTime);
-      
-      // Simulate email sending
-      simulateEmailSending();
-    }
-    
-    function simulateEmailSending() {
-      // This function would be replaced with actual email functionality
-      // For now, just display a message in the console
-      console.log("Simulating email: 'Dear Sharlyn, the PIN to access our special page is 2005.'");
     }
     
     function showLockout() {
       isLocked = true;
       document.getElementById('lockout-message').style.display = 'block';
       document.getElementById('submit-btn').disabled = true;
-      pinDigits.forEach(input => {
+      document.querySelectorAll('.pin-digit').forEach(input => {
         input.disabled = true;
       });
     }
@@ -800,10 +776,10 @@
       document.getElementById('submit-btn').disabled = false;
       document.getElementById('attempts-left').textContent = `Attempts remaining: ${attemptsLeft}`;
       
-      pinDigits.forEach(input => {
+      document.querySelectorAll('.pin-digit').forEach(input => {
         input.disabled = false;
       });
-      pinDigits[0].focus();
+      document.getElementById('digit-1').focus();
       
       localStorage.removeItem('lockoutEndTime');
     }
@@ -813,13 +789,20 @@
       localStorage.setItem('accessed', 'true');
       
       // Hide PIN container and show message
-      document.querySelector('.pin-container').style.display = 'none';
+      document.getElementById('pin-container').style.display = 'none';
       document.getElementById('note-container').style.display = 'block';
       
       // Play music
       const music = document.getElementById('bg-music');
       music.style.display = 'block';
-      music.play().catch(e => console.log('Auto-play prevented by browser'));
+      const playPromise = music.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          // Show play button if autoplay fails
+          music.controls = true;
+        });
+      }
       
       // Show the first paragraph immediately
       revealNextParagraph();
@@ -837,16 +820,12 @@
         // Show paragraph with animation
         const currentP = paragraphs[currentParagraph];
         currentP.style.display = 'block';
-        setTimeout(() => {
-          currentP.classList.add('visible');
-        }, 100);
+        setTimeout(() => currentP.classList.add('visible'), 100);
         
         // Show polaroid if it exists for this paragraph
-        if (currentParagraph === 1 || currentParagraph === 3) {
+        if ((currentParagraph === 1 || currentParagraph === 3) && polaroids.length > 0) {
           const polaroidIndex = currentParagraph === 1 ? 0 : 1;
-          if (polaroids[polaroidIndex]) {
-            polaroids[polaroidIndex].style.display = 'block';
-          }
+          polaroids[polaroidIndex].style.display = 'block';
         }
         
         currentParagraph++;
@@ -854,7 +833,7 @@
         // Hide button if all paragraphs are shown
         if (currentParagraph >= paragraphs.length) {
           document.getElementById('next-btn').style.display = 'none';
-          createConfetti(); // Final celebration
+          createConfetti();
         }
       }
     }
@@ -864,7 +843,7 @@
       const container = document.getElementById('floating-hearts');
       const heartCount = 15;
       
-for (let i = 0; i < heartCount; i++) {
+      for (let i = 0; i < heartCount; i++) {
         const heart = document.createElement('div');
         heart.classList.add('floating-heart');
         heart.innerHTML = '❤️';
@@ -895,17 +874,11 @@ for (let i = 0; i < heartCount; i++) {
           heart.style.animationDelay = `${Math.random() * 0.5}s`;
           container.appendChild(heart);
           
-          // Remove heart after animation ends
-          setTimeout(() => {
-            heart.remove();
-          }, 8000);
+          setTimeout(() => heart.remove(), 8000);
         }, i * 200);
       }
       
-      // Hide container after effect ends
-      setTimeout(() => {
-        container.style.display = 'none';
-      }, 15000);
+      setTimeout(() => container.style.display = 'none', 15000);
     }
     
     function createConfetti() {
@@ -915,29 +888,17 @@ for (let i = 0; i < heartCount; i++) {
       for (let i = 0; i < 150; i++) {
         const confetti = document.createElement('div');
         confetti.classList.add('confetti');
-        
-        // Randomize confetti properties
-        const size = Math.random() * 10 + 5;
-        const shape = Math.random() > 0.5 ? '❤️' : '✨';
-        
-        confetti.innerHTML = shape;
+        confetti.innerHTML = Math.random() > 0.5 ? '❤️' : '✨';
         confetti.style.left = `${Math.random() * 100}%`;
-        confetti.style.width = `${size}px`;
-        confetti.style.height = `${size}px`;
+        confetti.style.width = `${Math.random() * 10 + 5}px`;
+        confetti.style.height = confetti.style.width;
         confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
         confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-        
-        // Set animation
         confetti.style.animation = `fall ${3 + Math.random() * 5}s linear forwards`;
         confetti.style.animationDelay = `${Math.random() * 5}s`;
-        
-        // Append to body
         container.appendChild(confetti);
         
-        // Clean up after animation
-        setTimeout(() => {
-          confetti.remove();
-        }, 8000);
+        setTimeout(() => confetti.remove(), 8000);
       }
     }
     
@@ -947,26 +908,7 @@ for (let i = 0; i < heartCount; i++) {
       hintText.style.display = hintText.style.display === 'block' ? 'none' : 'block';
     }
     
-    // ==== Remember state between visits ====
-    function saveState() {
-      localStorage.setItem('currentParagraph', currentParagraph.toString());
-    }
-    
-    function loadState() {
-      const savedParagraph = localStorage.getItem('currentParagraph');
-      if (savedParagraph) {
-        // Reveal all paragraphs up to the saved point
-        const paragraphCount = parseInt(savedParagraph);
-        for (let i = 0; i < paragraphCount; i++) {
-          revealNextParagraph();
-        }
-      }
-    }
-    
-    // Save state when leaving the page
-    window.addEventListener('beforeunload', saveState);
-    
-    // Add keyboard shortcuts
+    // ==== Keyboard Shortcuts ====
     document.addEventListener('keydown', function(e) {
       // Press 'N' to reveal next paragraph
       if (e.key === 'n' && document.getElementById('note-container').style.display === 'block') {

@@ -588,7 +588,7 @@
 
   <script>
     // ==== Enhanced Security ====
-    const correctPinHash = "4d130d8d7e84302bb8f289ab34e8b5221ae1df9f127e5336b067c77e3d2d322f"; // SHA-256 hash of "2005"
+    const correctPin = "2005"; // The actual PIN
     const securityAnswers = ["2005", "two thousand and five", "two thousand five"];
     
     // ==== Constants and Variables ====
@@ -673,9 +673,8 @@
       if (isLocked) return;
       
       const enteredPin = getEnteredPin();
-      const enteredPinHash = CryptoJS.SHA256(enteredPin).toString();
       
-      if (enteredPinHash === correctPinHash) {
+      if (enteredPin === correctPin) {
         unlockMessage();
       } else {
         handleFailedAttempt();
